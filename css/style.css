@@ -94,8 +94,8 @@
 .reviews__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px; }
 .reviews__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .reviews__grid { margin-top: 36px; display: grid; gap: 12px; }
-/* Колонки включаем с 960px: на планшете 3 карточки в 2 колонки дали бы ряд 2+1 */
-@media (min-width: 960px) { .reviews__grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; } }
+/* 4 отзыва: сетка 2×2 с планшета, на ПК в один ряд длинный отзыв вытянул бы все карточки */
+@media (min-width: 768px) { .reviews__grid { grid-template-columns: 1fr 1fr; gap: 16px; } }
 .review {
   display: flex; flex-direction: column; gap: 14px;
   padding: 28px 24px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
@@ -124,6 +124,21 @@
 }
 .extra__title { font-family: var(--font-head); font-size: 26px; font-weight: 600; line-height: 1.1; }
 .extra__text { color: var(--muted); font-size: 15px; }
+
+/* Текст + пара фото: на телефоне друг под другом, на ПК в две колонки */
+.split { margin-top: 32px; display: grid; gap: 24px; }
+.split .extras__grid, .split .info { margin-top: 0; }
+@media (min-width: 1024px) {
+  .split { grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: center; }
+  .split .extras__grid { grid-template-columns: 1fr; }
+}
+
+/* Два фото рядом (зал и принтер, вход и табличка): 2 колонки даже на телефоне, кадр 4:5 */
+.photo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (min-width: 768px) { .photo-pair { gap: 16px; } }
+.photo { margin: 0; }
+.photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--surface); }
+.photo figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); }
 
 /* =========================================================
    10. ЯК ЗНАЙТИ

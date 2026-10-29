@@ -380,23 +380,28 @@
           </div>
         </div>
 
-        <!-- ЗАГЛУШКИ. Даня перенесёт реальные отзывы из Google Maps дословно.
+        <!-- Отзывы с Google Maps дословно, на языке оригинала (не перевод Google).
              Звёзды рисует main.js по data-rating (1–5) -->
         <div class="reviews__grid">
           <article class="review reveal" data-rating="5">
             <div class="review__stars" aria-hidden="true"></div>
-            <p class="review__text">[Текст відгуку з Google Maps]</p>
-            <p class="review__name">[Ім'я]</p>
+            <p class="review__text" lang="ru">Анастасия — отличный барбер, стрижёт качественно, аккуратно и со вкусом. Видно, что человек знает своё дело и подходит к работе с душой. Молодым парням советую хотя бы раз сходить к ней — уверен, после первой стрижки захотите вернуться снова. Барбер, которого действительно стоит рекомендовать! 💈🤝</p>
+            <p class="review__name">Алексей Ромашин</p>
           </article>
           <article class="review reveal" data-rating="5">
             <div class="review__stars" aria-hidden="true"></div>
-            <p class="review__text">[Текст відгуку з Google Maps]</p>
-            <p class="review__name">[Ім'я]</p>
+            <p class="review__text">Комфортні ціни . Фахівець Анастасія, взагалі, дуже гарно робе свою роботу. Ходжу вже дуже давно, тільки до неї . Всім раджу :)</p>
+            <p class="review__name">OnlyOne</p>
           </article>
           <article class="review reveal" data-rating="5">
             <div class="review__stars" aria-hidden="true"></div>
-            <p class="review__text">[Текст відгуку з Google Maps]</p>
-            <p class="review__name">[Ім'я]</p>
+            <p class="review__text">Як хлопець дуже задоволений результатом, з перукарем на одному вайбі стрижка пройшла швидко і комфортно, рекомендую!</p>
+            <p class="review__name">Максим Яковенко</p>
+          </article>
+          <article class="review reveal" data-rating="5">
+            <div class="review__stars" aria-hidden="true"></div>
+            <p class="review__text">Топ стрижка</p>
+            <p class="review__name">Давид Федирко</p>
           </article>
         </div>
       </div>
@@ -407,16 +412,29 @@
       <div class="wrap">
         <p class="eyebrow reveal">Поки чекаєте</p>
         <h2 class="section__title reveal">Також у перукарні</h2>
-        <div class="extras__grid">
-          <div class="extra reveal">
-            <svg class="extra__icon" aria-hidden="true"><use href="#i-coffee"/></svg>
-            <h3 class="extra__title">Кава</h3>
-            <p class="extra__text">Самообслуговування: еспресо, американо, капучино, лате.</p>
+        <!-- .split: на ПК слева карточки, справа фото -->
+        <div class="split">
+          <div class="extras__grid">
+            <div class="extra reveal">
+              <svg class="extra__icon" aria-hidden="true"><use href="#i-coffee"/></svg>
+              <h3 class="extra__title">Кава</h3>
+              <p class="extra__text">Самообслуговування: еспресо, американо, капучино, лате.</p>
+            </div>
+            <div class="extra reveal">
+              <svg class="extra__icon" aria-hidden="true"><use href="#i-print"/></svg>
+              <h3 class="extra__title">Друк документів</h3>
+              <p class="extra__text">Самообслуговування: чорно-білий і кольоровий друк, ксерокопії.</p>
+            </div>
           </div>
-          <div class="extra reveal">
-            <svg class="extra__icon" aria-hidden="true"><use href="#i-print"/></svg>
-            <h3 class="extra__title">Друк документів</h3>
-            <p class="extra__text">Самообслуговування: чорно-білий і кольоровий друк, ксерокопії.</p>
+          <div class="photo-pair">
+            <figure class="photo reveal">
+              <img src="img/salon/interior-900.webp" srcset="img/salon/interior-480.webp 480w, img/salon/interior-900.webp 900w" sizes="(min-width: 1024px) 330px, 50vw" alt="Зал перукарні Base 71: два крісла і дзеркала з підсвіткою" width="900" height="1200" loading="lazy">
+              <figcaption>Зал перукарні</figcaption>
+            </figure>
+            <figure class="photo reveal">
+              <img src="img/salon/printer-900.webp" srcset="img/salon/printer-480.webp 480w, img/salon/printer-900.webp 900w" sizes="(min-width: 1024px) 330px, 50vw" alt="Принтер для друку документів у перукарні" width="900" height="1200" loading="lazy">
+              <figcaption>Принтер для друку</figcaption>
+            </figure>
           </div>
         </div>
       </div>
@@ -428,16 +446,31 @@
         <p class="eyebrow reveal">Як нас знайти</p>
         <h2 class="section__title reveal">Base 71</h2>
 
-        <ul class="info reveal">
-          <li>
-            <svg aria-hidden="true"><use href="#i-pin"/></svg>
-            <span>Перукарня Base 71<br>Дніпро, вул. Набережна Перемоги, 46</span>
-          </li>
-          <li>
-            <svg aria-hidden="true"><use href="#i-clock"/></svg>
-            <span>Працюю за графіком 2/2, з 9:00 до 19:00, у неділю — до 18:00</span>
-          </li>
-        </ul>
+        <!-- .split: на ПК слева адрес и график, справа фото входа -->
+        <div class="split">
+          <ul class="info reveal">
+            <li>
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              <span>Перукарня Base 71<br>Дніпро, вул. Набережна Перемоги, 46</span>
+            </li>
+            <li>
+              <svg aria-hidden="true"><use href="#i-clock"/></svg>
+              <span>Працюю за графіком 2/2, з 9:00 до 19:00, у неділю — до 18:00</span>
+            </li>
+          </ul>
+
+          <!-- Как выглядит вход: помогает найти перукарню на месте -->
+          <div class="photo-pair">
+            <figure class="photo reveal">
+              <img src="img/salon/exterior-900.webp" srcset="img/salon/exterior-480.webp 480w, img/salon/exterior-900.webp 900w" sizes="(min-width: 1024px) 330px, 50vw" alt="Фасад з вивіскою «Перукарня Base 71» і сходи до входу" width="900" height="1140" loading="lazy">
+              <figcaption>Вивіска над входом</figcaption>
+            </figure>
+            <figure class="photo reveal">
+              <img src="img/salon/sign-900.webp" srcset="img/salon/sign-480.webp 480w, img/salon/sign-900.webp 900w" sizes="(min-width: 1024px) 330px, 50vw" alt="Табличка біля дверей з графіком роботи перукарні" width="900" height="1200" loading="lazy">
+              <figcaption>Табличка біля дверей</figcaption>
+            </figure>
+          </div>
+        </div>
 
         <div class="location">
           <!-- Место под карту: вставьте сюда <iframe> из Google Maps (Поделиться → Встраивание карт).
