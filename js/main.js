@@ -55,7 +55,8 @@ function showShot(index) {
   // Зацикливаем: после последнего фото снова первое
   current = (index + shots.length) % shots.length;
   const img = shots[current].querySelector('img');
-  lightboxImg.src = img.src;
+  // В галерее на телефоне грузится маленькая версия, в лайтбоксе берём крупную (-720)
+  lightboxImg.src = img.getAttribute('src');
   lightboxImg.alt = img.alt;
   lightboxCount.textContent = `${current + 1} / ${shots.length}`;
 }
