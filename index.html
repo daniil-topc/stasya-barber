@@ -176,6 +176,8 @@
       font-size: clamp(76px, 22vw, 168px); line-height: .9; letter-spacing: -.02em;
     }
     .hero__lead { margin-top: 20px; max-width: 440px; color: var(--muted); font-size: 17px; }
+    /* Адрес в первом экране выделен винным, чтобы его замечали сразу */
+    .hero__address { color: var(--accent-text); font-weight: 600; }
     .hero__actions { margin-top: 28px; display: flex; align-items: center; gap: 12px; }
     .hero__actions .btn { flex: 1 1 auto; max-width: 240px; }
 
@@ -248,7 +250,7 @@
         <div class="hero__body">
           <p class="eyebrow">Барбер · Перукарня Base 71 · Дніпро</p>
           <h1 class="hero__title">Stasya</h1>
-          <p class="hero__lead">Чоловічі стрижки та борода на Набережній Перемоги, 46. Оберіть послугу і день, а я підтверджу час у Telegram.</p>
+          <p class="hero__lead">Чоловічі стрижки та борода на <strong class="hero__address">Набережній Перемоги, 46</strong>. Оберіть послугу і день, а я підтверджу час у Telegram.</p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="#booking">Записатися</a>
             <a class="icon-btn" href="https://www.instagram.com/barber_stasichka_dp/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -265,10 +267,10 @@
     <!-- ========== 2. ПРО МАЙСТРА ========== -->
     <section class="section about" id="about">
       <div class="wrap about__grid">
-        <!-- Сюда пойдёт img/tools.jpg (инструменты мастера). Пока стоит фото Стаси с машинкой:
-             когда появится tools.jpg, поменяйте src и alt -->
+        <!-- Фото почти квадратное, рамка 4:5 обрезает его по бокам, поэтому картинка
+             рисуется шире блока: sizes ≈ ширина блока × 1.4 -->
         <div class="about__photo reveal">
-          <img src="img/master/master-02-900.webp" srcset="img/master/master-02-480.webp 480w, img/master/master-02-900.webp 900w" sizes="(min-width: 768px) 42vw, 100vw" alt="Stasya з машинкою для стрижки" width="900" height="1201" loading="lazy">
+          <img src="img/master/master-03-1100.webp" srcset="img/master/master-03-600.webp 600w, img/master/master-03-1100.webp 1100w" sizes="(min-width: 768px) 58vw, 140vw" alt="Stasya у перукарні" width="1100" height="998" loading="lazy">
         </div>
         <div class="about__body reveal">
           <p class="eyebrow">Про майстра</p>
