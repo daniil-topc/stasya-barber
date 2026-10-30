@@ -6,6 +6,10 @@ const FIRST_HOUR = 9;
 const LAST_HOUR = 18;
 const LAST_HOUR_SUNDAY = 17;
 
+// График 2/2: от даты start идут 2 рабочих дня, потом 2 выходных и так по кругу.
+// Сверено с графиком Стаси на ноябрь–декабрь 2026. Если график сдвинется, поменяйте start
+const SCHEDULE = { start: '2026-11-03', on: 2, off: 2 };
+
 document.getElementById('year').textContent = new Date().getFullYear();
 
 /* ---------- Шапка: рамка после начала скролла ---------- */
@@ -134,6 +138,80 @@ function fillTimes() {
 fillTimes();
 fields.date.addEventListener('change', fillTimes);
 
+/* ---------- Календарь рабочих дней ---------- */
+// Сравниваем даты через Date.UTC, чтобы переход на летнее время не сдвигал счёт дней
+function isWorkDay(y, m, d) {
+  const [sy, sm, sd] = SCHEDULE.start.split('-').map(Number);
+  const days = Math.round((Date.UTC(y, m, d) - Date.UTC(sy, sm - 1, sd)) / 86400000);
+  const cycle = SCHEDULE.on + SCHEDULE.off;
+  return ((days % cycle) + cycle) % cycle < SCHEDULE.on; // остаток всегда положительный, даже до start
+}
+
+const MONTHS = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+const calGrid = document.getElementById('calGrid');
+const calTitle = document.getElementById('calTitle');
+const calPrev = document.getElementById('calPrev');
+const calNext = document.getElementById('calNext');
+const today = new Date();
+const firstMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+const MONTHS_AHEAD = 3; // дальше трёх месяцев вперёд листать не даём
+let shown = new Date(firstMonth);
+
+function renderCalendar() {
+  const y = shown.getFullYear();
+  const m = shown.getMonth();
+  const todayIso = toInputDate(today);
+  calTitle.textContent = `${MONTHS[m]} ${y}`;
+
+  let html = WEEKDAYS.map((w) => `<span class="calendar__wd">${w}</span>`).join('');
+  // getDay(): 0 = воскресенье. Сдвигаем, чтобы неделя начиналась с понедельника
+  const offset = (new Date(y, m, 1).getDay() + 6) % 7;
+  html += '<span></span>'.repeat(offset);
+
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  for (let d = 1; d <= daysInMonth; d++) {
+    const iso = toInputDate(new Date(y, m, d));
+    const past = iso < todayIso;
+    const work = isWorkDay(y, m, d);
+    const cls = ['calendar__day', work && 'is-work', past && 'is-past', iso === todayIso && 'is-today', iso === fields.date.value && 'is-selected']
+      .filter(Boolean).join(' ');
+    // Рабочий и не прошедший день — кнопка, остальные просто число
+    html += work && !past
+      ? `<button class="${cls}" type="button" data-date="${iso}" aria-label="${d} ${MONTHS[m].toLowerCase()}, робочий день">${d}</button>`
+      : `<span class="${cls}">${d}</span>`;
+  }
+  calGrid.innerHTML = html;
+
+  const monthsFromNow = (y - firstMonth.getFullYear()) * 12 + (m - firstMonth.getMonth());
+  calPrev.disabled = monthsFromNow <= 0;
+  calNext.disabled = monthsFromNow >= MONTHS_AHEAD;
+}
+
+calPrev.addEventListener('click', () => { shown.setMonth(shown.getMonth() - 1); renderCalendar(); });
+calNext.addEventListener('click', () => { shown.setMonth(shown.getMonth() + 1); renderCalendar(); });
+
+// Клик по рабочему дню: ставим его в форму и пересчитываем часы (воскресенье короче)
+calGrid.addEventListener('click', (e) => {
+  const day = e.target.closest('[data-date]');
+  if (!day) return;
+  fields.date.value = day.dataset.date;
+  fields.date.dispatchEvent(new Event('change'));
+  setError(fields.date, '');
+});
+
+// Если день выбрали прямо в поле даты, подсвечиваем его и в календаре
+fields.date.addEventListener('change', () => {
+  if (fields.date.value) {
+    const [y, m, d] = fields.date.value.split('-').map(Number);
+    shown = new Date(y, m - 1, 1);
+    // Сразу подсказываем, если выбран выходной, а не только при отправке
+    setError(fields.date, isWorkDay(y, m - 1, d) ? '' : 'Цей день у мене вихідний. Оберіть робочий, вони рожеві в календарі');
+  }
+  renderCalendar();
+});
+renderCalendar();
+
 // Кнопка «Записатися» у услуги: выбираем её в форме и скроллим к форме
 document.querySelectorAll('.price__book').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -165,7 +243,13 @@ function validate() {
   const digits = fields.phone.value.replace(/\D/g, '');
   check(fields.phone, digits.length >= 10 ? '' : 'Вкажіть номер телефону, наприклад +380 67 123 45 67');
 
-  check(fields.date, fields.date.value && fields.date.value < fields.date.min ? 'Цей день уже минув, оберіть інший' : '');
+  let dateError = '';
+  if (fields.date.value) {
+    const [y, m, d] = fields.date.value.split('-').map(Number);
+    if (fields.date.value < fields.date.min) dateError = 'Цей день уже минув, оберіть інший';
+    else if (!isWorkDay(y, m - 1, d)) dateError = 'Цей день у мене вихідний. Оберіть робочий, вони рожеві в календарі';
+  }
+  check(fields.date, dateError);
 
   if (firstInvalid) firstInvalid.focus();
   return !firstInvalid;

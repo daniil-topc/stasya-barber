@@ -146,6 +146,7 @@
    ========================================================= */
 .info { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 14px; }
 .info li { display: flex; gap: 14px; align-items: flex-start; font-size: 16px; }
+.info a { color: var(--accent-text); text-underline-offset: 3px; }
 .info svg { width: 22px; height: 22px; margin-top: 2px; flex-shrink: 0; color: var(--accent-text); }
 
 .location { margin-top: 32px; display: grid; gap: 16px; }
@@ -178,6 +179,37 @@
 .booking { background: var(--surface); border-top: 1px solid var(--line); }
 .booking__grid { display: grid; gap: 36px; }
 @media (min-width: 1024px) { .booking__grid { grid-template-columns: .8fr 1.2fr; gap: 80px; align-items: start; } }
+
+/* Календарь рабочих дней: рабочие розовые, как в графике у Стаси */
+.calendar {
+  margin-top: 28px; max-width: 420px; padding: 20px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.calendar__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.calendar__title { font-family: var(--font-head); font-size: 26px; font-weight: 600; font-variant-numeric: lining-nums; }
+.calendar__nav {
+  display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0;
+  background: transparent; border: 1px solid var(--line); border-radius: 50%; cursor: pointer;
+}
+.calendar__nav svg { width: 18px; height: 18px; }
+.calendar__nav--next svg { transform: rotate(180deg); }
+.calendar__nav:hover:not(:disabled) { border-color: var(--accent-light); }
+.calendar__nav:disabled { opacity: .3; cursor: default; }
+.calendar__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.calendar__wd { padding-bottom: 6px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.calendar__day {
+  display: grid; place-items: center; aspect-ratio: 1; min-height: 36px;
+  border: 1px solid transparent; border-radius: 8px; font-size: 14px; color: var(--muted);
+}
+button.calendar__day { padding: 0; cursor: pointer; font: inherit; font-size: 14px; }
+.calendar__day.is-work { background: rgba(232, 51, 111, .38); border-color: rgba(232, 51, 111, .75); color: var(--text); font-weight: 600; }
+button.calendar__day.is-work:hover { background: rgba(232, 51, 111, .55); }
+.calendar__day.is-past { opacity: .35; }
+.calendar__day.is-today { outline: 1px solid var(--text); outline-offset: -1px; }
+.calendar__day.is-selected { background: var(--accent-pink); border-color: var(--accent-pink); color: #fff; }
+.calendar__legend { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+.calendar__swatch { width: 14px; height: 14px; flex-shrink: 0; border-radius: 4px; background: rgba(232, 51, 111, .38); border: 1px solid rgba(232, 51, 111, .75); }
+@media (max-width: 399px) { .calendar { padding: 14px; } .calendar__grid { gap: 3px; } }
 
 .form { display: grid; gap: 16px; }
 @media (min-width: 600px) { .form { grid-template-columns: 1fr 1fr; } .field--full { grid-column: 1 / -1; } }

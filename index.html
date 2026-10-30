@@ -303,7 +303,7 @@
           <li class="price">
             <span class="price__name">Стрижка під насадку</span>
             <span class="price__dots" aria-hidden="true"></span>
-            <span class="price__value">300 грн</span>
+            <span class="price__value">350 грн</span>
             <button class="price__book" type="button" data-service="Стрижка під насадку">Записатися</button>
           </li>
           <li class="price">
@@ -457,7 +457,7 @@
             </li>
             <li>
               <svg aria-hidden="true"><use href="#i-clock"/></svg>
-              <span>Працюю за графіком 2/2, з 9:00 до 19:00, у неділю — до 18:00</span>
+              <span>Працюю за графіком 2/2, з 9:00 до 19:00, у неділю — до 18:00. <a href="#calendar">Мої робочі дні</a></span>
             </li>
           </ul>
 
@@ -499,6 +499,22 @@
           <p class="eyebrow">Запис</p>
           <h2 class="section__title">Записатися на стрижку</h2>
           <p class="section__lead">Заповніть форму, і відкриється Telegram з готовим повідомленням. Залишиться натиснути «Надіслати».</p>
+
+          <!-- Календарь рабочих дней. Рисует main.js по графику 2/2 (SCHEDULE в начале файла).
+               Клик по рабочему дню подставляет его в поле «Бажаний день» -->
+          <div class="calendar" id="calendar">
+            <div class="calendar__head">
+              <button class="calendar__nav" type="button" id="calPrev" aria-label="Попередній місяць">
+                <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+              </button>
+              <p class="calendar__title" id="calTitle" aria-live="polite"></p>
+              <button class="calendar__nav calendar__nav--next" type="button" id="calNext" aria-label="Наступний місяць">
+                <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+              </button>
+            </div>
+            <div class="calendar__grid" id="calGrid"></div>
+            <p class="calendar__legend"><span class="calendar__swatch" aria-hidden="true"></span>Робочі дні, натисніть на день, щоб обрати його у формі</p>
+          </div>
         </div>
 
         <form class="form reveal" id="bookingForm" novalidate>
