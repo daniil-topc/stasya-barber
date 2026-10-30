@@ -213,7 +213,8 @@ button.calendar__day.is-work:hover { background: rgba(232, 51, 111, .55); }
 
 .form { display: grid; gap: 16px; }
 @media (min-width: 600px) { .form { grid-template-columns: 1fr 1fr; } .field--full { grid-column: 1 / -1; } }
-.field { display: grid; gap: 8px; }
+/* min-width: 0 — иначе ячейка grid не даёт полю сжаться уже его «родной» ширины */
+.field { display: grid; gap: 8px; min-width: 0; }
 .field label { font-size: 14px; font-weight: 500; }
 .req { color: var(--accent-text); }
 .field input, .field select, .field textarea {
@@ -224,6 +225,12 @@ button.calendar__day.is-work:hover { background: rgba(232, 51, 111, .55); }
   color-scheme: dark;
 }
 .field textarea { resize: vertical; min-height: 96px; }
+/* iOS Safari: поле даты со значением растягивается шире колонки и ставит дату по центру.
+   @supports с -webkit-touch-callout срабатывает только на iPhone/iPad, ПК не трогаем */
+@supports (-webkit-touch-callout: none) {
+  .field input[type="date"] { -webkit-appearance: none; appearance: none; display: block; min-width: 0; max-width: 100%; }
+  .field input[type="date"]::-webkit-date-and-time-value { text-align: left; }
+}
 .field select {
   appearance: none; -webkit-appearance: none; padding-right: 44px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23a39599' stroke-width='2' stroke-linecap='round' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
